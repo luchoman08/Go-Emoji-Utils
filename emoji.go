@@ -3,10 +3,6 @@ package emoji
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
-	"path"
-	"runtime"
 	"strings"
 
 	"github.com/tmdvs/Go-Emoji-Utils/utils"
@@ -24,25 +20,11 @@ var Emojis map[string]Emoji
 
 // Unmarshal the emoji JSON into the Emojis map
 func init() {
-	// Work out where we are in relation to the caller
-	_, filename, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("No caller information")
-	}
-
 	// Open the Emoji definition JSON and Unmarshal into map
-	jsonFile, err := os.Open(path.Dir(filename) + "/data/emoji.json")
-	defer jsonFile.Close()
+	err := json.Unmarshal([]byte(emojisRaw), &Emojis)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-
-	byteValue, e := ioutil.ReadAll(jsonFile)
-	if e != nil {
-		panic(e)
-	}
-
-	json.Unmarshal(byteValue, &Emojis)
 }
 
 // LookupEmoji - Lookup a single emoji definition

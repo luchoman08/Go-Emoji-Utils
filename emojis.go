@@ -1,3 +1,7 @@
+package emoji 
+
+// emojisRaw contains the raw emojis info with key, values and descriptos for each emoji
+const emojisRaw = `
 {
 	"1F004": {
 		"key": "1F004",
@@ -15870,3 +15874,4 @@
 		"descriptor": "Registered"
 	}
 }
+`
